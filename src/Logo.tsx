@@ -1,7 +1,6 @@
 import * as React from "react"
 import {
   chakra,
-  keyframes,
   ImageProps,
   forwardRef,
 } from "@chakra-ui/react"

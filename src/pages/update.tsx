@@ -13,7 +13,12 @@ const Upload = () => {
   const [image, setImage] = useState<File>()
   const navigate = useNavigate()
   const option: AxiosRequestConfig = {
-    baseURL: `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}`,
+    baseURL: `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/`,
+    headers: {
+      'Access-Control-Allow-Origin': `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/`,
+      'Content-Type': 'multipart/form-data',
+    },
+    withCredentials: true,
   }
   useEffect(() => {
     axios.get(`getImageDetail/${location.pathname.split('/')[2]}`, option).then((res) => {
@@ -23,6 +28,7 @@ const Upload = () => {
       authorRef.current.value = res.data.author
       setImageUrl(res.data.url)
     })
+    // eslint-disable-next-line
   }, [])
   const handleSetImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e)
