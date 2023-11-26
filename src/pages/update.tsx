@@ -11,6 +11,7 @@ const Upload = () => {
   const imageRef = useRef<HTMLInputElement>(null)
   const [imageUrl, setImageUrl] = useState<string>()
   const [image, setImage] = useState<File>()
+  const [eventId, setEventId] = useState<Number>(0)
   const navigate = useNavigate()
   const option: AxiosRequestConfig = {
     baseURL: `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/`,
@@ -26,7 +27,8 @@ const Upload = () => {
       if (!titleRef.current || !authorRef.current || !imageRef.current) return;
       titleRef.current.value = res.data.title
       authorRef.current.value = res.data.author
-      setImageUrl(res.data.url)
+      setImageUrl(`${process.env.REACT_APP_S3_URL}/${res.data.url}`)
+      setEventId(res.data.id)
     })
     // eslint-disable-next-line
   }, [])
@@ -47,7 +49,7 @@ const Upload = () => {
     formData.append('title', title)
     formData.append('author', author)
     formData.append('image', image)
-    axios.put('updateImage', formData, option).then(res => {
+    axios.put(`updateImage/${eventId}`, formData, option).then(res => {
       console.log(res.data);
       navigate(`/detail/${res.data.id}`)
     })
