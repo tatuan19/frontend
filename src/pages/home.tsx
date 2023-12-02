@@ -17,7 +17,6 @@ const Home = () => {
   const option: AxiosRequestConfig = {
     baseURL: `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/`,
     headers: {
-      'Access-Control-Allow-Origin': `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/`,
       'Content-Type': 'multipart/form-data',
     },
     withCredentials: true,
